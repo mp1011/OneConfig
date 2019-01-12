@@ -1,0 +1,6 @@
+﻿<?xml version="1.0"?>
+<configuration>
+    <add key="SampleXMLKey" value="SampleXMLValue"/>
+    <add key="SampleKeyToOverride" value="Overridden Value"/>
+  </mySection>
+</configuration>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0"?>
+<configuration>
+  <mySection>
+    <add key="SampleXMLKey" value="SampleXMLValue"/>
+    <add key="SampleKeyToOverride" value="Overridden Value"/>
+    <add key="Variable1" value="Resolved"/>
+    <add key="Variable2" value="Val#{Variable3}"/>
+    <add key="Variable3" value="ue"/>
+  </mySection>
+</configuration>
