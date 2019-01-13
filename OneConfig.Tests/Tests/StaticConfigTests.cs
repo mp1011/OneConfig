@@ -49,5 +49,13 @@ namespace OneConfig.Tests
                 Assert.AreEqual(oldValue, OneConfig.GetValue("SampleKey"));
             }
         }
+
+        [TestCase("doesnt exist", "No reader contains this configuration key")]
+        [TestCase("SampleKey", "This value was provided by the AppSettingsReader and is being cached in memory")]
+        [TestCase("SampleXMLKey", "This value was provided by the XMLSectionReader and is being cached in memory")]
+        public void CanGetSourceOfConfigValue(string key, string expectedSource)
+        {
+            Assert.AreEqual(expectedSource, OneConfig.GetValueSource(key).Description);
+        }
     }
 }

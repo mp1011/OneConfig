@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DIRegistrar.cs" />
+    <Compile Include="Models\ConfigSourceDescription.cs" />
     <Compile Include="Models\ConfigurationValueFromReader.cs" />
     <Compile Include="Models\Exceptions\ConfigurationNotFoundException.cs" />
     <Compile Include="Models\Exceptions\ConfigurationReaderLoadException.cs" />

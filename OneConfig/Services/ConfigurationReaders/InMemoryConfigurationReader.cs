@@ -11,17 +11,18 @@ namespace OneConfig.Services.ConfigurationReaders
     class InMemoryConfigurationReader : IConfigurationReader
     {
         private Dictionary<string, string> _configValues = new Dictionary<string, string>();
-        private IConfigurationReader _actualReader;
+        public IConfigurationReader ActualReader { get; }
+
         private bool _triedPreload;
 
         public InMemoryConfigurationReader(IConfigurationReader actualReader)
         {
-            _actualReader = actualReader;
+            ActualReader = actualReader;
         }
 
         private void TryPreloadValues()
         {
-            var multiReader = _actualReader as IMultiConfigurationReader;
+            var multiReader = ActualReader as IMultiConfigurationReader;
             if (multiReader != null)
                 _configValues = multiReader.GetAllValues() ?? new Dictionary<string, string>();
 
@@ -39,7 +40,7 @@ namespace OneConfig.Services.ConfigurationReaders
             {                
                 if (!_configValues.TryGetValue(key, out result))
                 {
-                    result = _actualReader.GetSingleValue(key);
+                    result = ActualReader.GetSingleValue(key);
                     _configValues.Add(key, result);
                 }
             }

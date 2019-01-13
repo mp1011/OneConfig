@@ -26,7 +26,7 @@ namespace OneConfig.Tests
         public void CanParseReadersFromAppSettings()
         {
             var readers = ReaderFactory.FromAppSettings(false).ToArray();
-            Assert.AreEqual(2, readers.Length);
+            Assert.AreEqual(3, readers.Length);
 
             Assert.IsInstanceOf<AppSettingsReader>(readers[0]);
             Assert.IsInstanceOf<XMLSectionReader>(readers[1]);

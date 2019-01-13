@@ -1,4 +1,5 @@
-﻿using OneConfig.Services;
+﻿using OneConfig.Models;
+using OneConfig.Services;
 using OneConfig.Services.ConfigurationProvider;
 using OneConfig.Services.ConfigurationReaders;
 using OneConfig.Services.Interfaces;
@@ -52,6 +53,13 @@ namespace OneConfig
 
             var resolver = new ConfigVariableResolver();
             return resolver.Resolve(provider, value.Text);
+        }
+
+        public static ConfigSourceDescription GetValueSource(string key)
+        {
+            var provider = GetProvider();
+            var value = provider.GetValue(key);
+            return new ConfigSourceDescription(value);
         }
     }
 }
