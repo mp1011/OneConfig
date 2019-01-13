@@ -18,7 +18,7 @@ namespace OneConfig.Tests
         public void CanParseReaderFromText(string text, Type expectedReaderType)
         {
             ReaderFactory.ApplicationDirectory = TestContext.CurrentContext.TestDirectory;
-            var reader = ReaderFactory.FromString(text,false);
+            var reader = ReaderFactory.FromString(text, false).Reader;
             Assert.AreEqual(expectedReaderType, reader.GetType());
         }
 
@@ -26,10 +26,10 @@ namespace OneConfig.Tests
         public void CanParseReadersFromAppSettings()
         {
             var readers = ReaderFactory.FromAppSettings(false).ToArray();
-            Assert.AreEqual(3, readers.Length);
+            Assert.AreEqual(4, readers.Length);
 
-            Assert.IsInstanceOf<AppSettingsReader>(readers[0]);
-            Assert.IsInstanceOf<XMLSectionReader>(readers[1]);
+            Assert.IsInstanceOf<AppSettingsReader>(readers[0].Reader);
+            Assert.IsInstanceOf<XMLSectionReader>(readers[1].Reader);
         }
 
         [Test]
@@ -40,10 +40,18 @@ namespace OneConfig.Tests
             {
                 var reader = factory.TryParseReader("bad ctor");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Assert.That(e.Message.Contains("Make sure this type has a public parameterless constructor."));
             }
+        }
+
+        [Test]
+        public void MissingConfigurationDoesNotCrashProgram()
+        {
+            var anyConfig = OneConfig.GetValue("any");
+            var error = OneConfig.ReaderLoadErrors.First();
+            Assert.That(error.Message.Contains("The file does not exist"));
         }
     }
 }

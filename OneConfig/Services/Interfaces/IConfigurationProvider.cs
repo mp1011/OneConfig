@@ -1,4 +1,5 @@
 ﻿using OneConfig.Models;
+using OneConfig.Models.Exceptions;
 
 namespace OneConfig.Services.Interfaces
 {

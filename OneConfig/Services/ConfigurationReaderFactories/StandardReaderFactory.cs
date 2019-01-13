@@ -40,7 +40,7 @@ namespace OneConfig.Services.ConfigurationReaderFactories
             }
             catch(Exception e)
             {
-                throw new ConfigurationReaderLoadException($"Unable to create a reader of type {readerType.FullName}. Make sure this type has a public parameterless constructor.");
+                throw new ConfigurationException($"Unable to create a reader of type {readerType.FullName}. Make sure this type has a public parameterless constructor.");
             }
         }
     }

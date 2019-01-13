@@ -27,7 +27,7 @@ namespace OneConfig.Services.ConfigurationReaderFactories
             if (xmlFile.Exists && xmlFile.Extension.Equals(".xml", StringComparison.OrdinalIgnoreCase))
                 return new XMLSectionReader(xmlFile.FullName, xPath);
             else
-                throw new ConfigurationNotFoundException($"Unable to load configuration from {xmlFilePath}. The file does not exist");
+                throw new ConfigurationException($"Unable to load configuration from {xmlFilePath}. The file does not exist");
         }
     }
 }

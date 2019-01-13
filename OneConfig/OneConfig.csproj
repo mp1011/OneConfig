@@ -52,13 +52,12 @@
     <Compile Include="DIRegistrar.cs" />
     <Compile Include="Models\ConfigSourceDescription.cs" />
     <Compile Include="Models\ConfigurationValueFromReader.cs" />
-    <Compile Include="Models\Exceptions\ConfigurationNotFoundException.cs" />
-    <Compile Include="Models\Exceptions\ConfigurationReaderLoadException.cs" />
+    <Compile Include="Models\Exceptions\ConfigurationException.cs" />
     <Compile Include="Models\Exceptions\CyclicVariableDependencyException.cs" />
-    <Compile Include="Models\Exceptions\UnableToReadConfigurationException.cs" />
     <Compile Include="Models\ConfigurationValue.cs" />
     <Compile Include="Models\NameValue.cs" />
     <Compile Include="Models\IdentifyByStringAttribute.cs" />
+    <Compile Include="Models\ReaderLoadResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ConfigurationProvider\ConfigurationProvider.cs" />
     <Compile Include="Services\ConfigurationReaderFactories\DatabaseReaderFactory.cs" />

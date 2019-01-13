@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OneConfig.Models;
+using OneConfig.Models.Exceptions;
 using OneConfig.Services.ConfigurationReaders;
 using OneConfig.Services.Interfaces;
 
@@ -17,7 +18,7 @@ namespace OneConfig.Services.ConfigurationProvider
         {
             _configReaders = readers.ToList();
         }
-
+      
         public void AddReader(IConfigurationReader reader)
         {
             lock (this)

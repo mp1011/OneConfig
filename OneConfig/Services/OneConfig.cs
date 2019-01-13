@@ -1,8 +1,10 @@
 ﻿using OneConfig.Models;
+using OneConfig.Models.Exceptions;
 using OneConfig.Services;
 using OneConfig.Services.ConfigurationProvider;
 using OneConfig.Services.ConfigurationReaders;
 using OneConfig.Services.Interfaces;
+using System.Collections.Generic;
 
 namespace OneConfig
 {
@@ -10,10 +12,28 @@ namespace OneConfig
     {
         private static IConfigurationProvider _provider;
         private static RuntimeConfigurationReader _runtimeConfigReader;
-
+     
+        public static ConfigurationException[] ReaderLoadErrors { get; private set; }
+      
         public static IConfigurationProvider GetProvider()
         {
-            _provider = _provider ?? new ConfigurationProvider(ReaderFactory.FromAppSettings(wrapWithInMemoryReader:true));            
+            if(_provider == null)
+            {
+                List<ConfigurationException> loadErrors = new List<ConfigurationException>();
+                List<IConfigurationReader> readers = new List<IConfigurationReader>();
+
+                foreach(var result in ReaderFactory.FromAppSettings(wrapWithInMemoryReader: true))
+                {
+                    if (result.Error != null)
+                        loadErrors.Add(result.Error);
+                    else if (result.Reader != null)
+                        readers.Add(result.Reader);
+                }
+
+                ReaderLoadErrors = loadErrors.ToArray();
+                _provider = new ConfigurationProvider(readers);
+
+            }
             return _provider;
         }
 

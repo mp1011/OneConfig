@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using OneConfig.Models;
+using OneConfig.Models.Exceptions;
 using OneConfig.Services;
 using OneConfig.Services.ConfigurationReaders;
 using System;
@@ -20,10 +21,12 @@ namespace OneConfig.Tests
         [TestCase(@"Tests\SampleXML\bad.xml//mySection")]
         public void CanHandleBadConfiguration(string badConnectionString)
         {
-            Assert.Throws<UnableToReadConfigurationException>(() =>
+            Assert.Throws<ConfigurationException>(() =>
             {
-                var reader = ReaderFactory.FromString(badConnectionString,false);
-                var value = reader.GetSingleValue("dummy");
+                var result = ReaderFactory.FromString(badConnectionString,false);
+                if (result.Error != null)
+                    throw result.Error;
+                var value = result.Reader.GetSingleValue("dummy");
             });
         }       
     }

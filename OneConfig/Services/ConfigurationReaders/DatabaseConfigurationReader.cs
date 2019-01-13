@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using OneConfig.Models;
+using OneConfig.Models.Exceptions;
 using OneConfig.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace OneConfig.Services.ConfigurationReaders
             }
             catch (Exception e)
             {
-                throw new UnableToReadConfigurationException($"Unable to read database configuration. Error: {e.Message}", e);
+                throw new ConfigurationException($"Unable to read database configuration. Error: {e.Message}", e);
             }
         }
 
@@ -58,7 +59,7 @@ namespace OneConfig.Services.ConfigurationReaders
             }
             catch (Exception e)
             {
-                throw new UnableToReadConfigurationException($"Unable to read database configuration. Error: {e.Message}", e);
+                throw new ConfigurationException($"Unable to read database configuration. Error: {e.Message}", e);
             }
         }
     }

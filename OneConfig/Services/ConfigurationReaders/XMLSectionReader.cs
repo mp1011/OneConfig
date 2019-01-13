@@ -3,6 +3,7 @@ using OneConfig.Services.Interfaces;
 using System;
 using System.Xml;
 using System.Collections.Generic;
+using OneConfig.Models.Exceptions;
 
 namespace OneConfig.Services.ConfigurationReaders
 {
@@ -22,7 +23,7 @@ namespace OneConfig.Services.ConfigurationReaders
             }
             catch(Exception e)
             {
-                throw new UnableToReadConfigurationException($"Error loading xml from {filePath}. Error: {e.Message}", e);
+                throw new ConfigurationException($"Error loading xml from {filePath}. Error: {e.Message}", e);
             }
 
             try
@@ -31,11 +32,11 @@ namespace OneConfig.Services.ConfigurationReaders
             }
             catch (Exception e)
             {
-                throw new UnableToReadConfigurationException($"Unable to read configuration because the xpath \"{sectionXPath}\" could not be evaluated. Error: {e.Message}", e);
+                throw new ConfigurationException($"Unable to read configuration because the xpath \"{sectionXPath}\" could not be evaluated. Error: {e.Message}", e);
             }
 
             if (_settingsContainerNode == null)
-                throw new UnableToReadConfigurationException($"Unable to read configuration because the xpath {sectionXPath} was not found in the given xml document");
+                throw new ConfigurationException($"Unable to read configuration because the xpath {sectionXPath} was not found in the given xml document");
 
         }
 
@@ -43,7 +44,7 @@ namespace OneConfig.Services.ConfigurationReaders
         {
             _settingsContainerNode = document.SelectSingleNode(sectionXPath);
             if (_settingsContainerNode == null)
-                throw new UnableToReadConfigurationException($"Unable to read configuration because the xpath {sectionXPath} was not found in the given xml document");
+                throw new ConfigurationException($"Unable to read configuration because the xpath {sectionXPath} was not found in the given xml document");
         }
 
         public string GetSingleValue(string key)
