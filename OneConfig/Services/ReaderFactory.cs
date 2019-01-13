@@ -36,7 +36,7 @@ namespace OneConfig.Services
             }
 
 
-            throw new ConfigurationReaderNotFoundException(text);
+            throw new ConfigurationReaderLoadException(text);
         }
 
         public static IEnumerable<IConfigurationReader> FromAppSettings(bool wrapWithInMemoryReader)

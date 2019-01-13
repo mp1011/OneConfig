@@ -13,6 +13,7 @@ namespace OneConfig.Tests
     [TestFixture]
     class ErrorHandlingTests
     {
+        [Category("Long Tests")]
         [TestCase(@"Data Source=notarealserver\SQLExpress;Initial Catalog=MyDatabase;Integrated Security=True")]
         [TestCase(@"Data Source=localhost\SQLExpress;Initial Catalog=Not a Real Database;Integrated Security=True")]
         [TestCase(@"Data Source=localhost\SQLExpress;Initial Catalog=Not a Real Database;User ID=wrong;Password=wrong")]

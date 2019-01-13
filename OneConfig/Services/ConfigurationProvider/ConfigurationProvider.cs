@@ -11,22 +11,33 @@ namespace OneConfig.Services.ConfigurationProvider
 {
     public class ConfigurationProvider : IConfigurationProvider
     {
-        private  IConfigurationReader[] _configReaders;
-
+        private List<IConfigurationReader> _configReaders;
+    
         public ConfigurationProvider(IEnumerable<IConfigurationReader> readers)
         {
-            _configReaders = readers.ToArray();
+            _configReaders = readers.ToList();
+        }
+
+        public void AddReader(IConfigurationReader reader)
+        {
+            lock (this)
+            {
+                _configReaders.Add(reader);
+            }
         }
 
         public ConfigurationValue GetValue(string key)
         {
             ConfigurationValue ret = new ConfigurationValue(key);
 
-            foreach (var reader in _configReaders)
+            lock (this)
             {
-                ret.TryOverrideWith(reader);
+                foreach (var reader in _configReaders)
+                {
+                    ret.TryOverrideWith(reader);
+                }
             }
-            
+
             return ret;
         }
     }

@@ -9,6 +9,9 @@ namespace OneConfig.Services
     {
         public string Resolve(IConfigurationProvider provider, string text)
         {
+            if (text == null)
+                return null;
+
             bool somethingChanged = true;
 
             List<string> replacementHistory = new List<string>();

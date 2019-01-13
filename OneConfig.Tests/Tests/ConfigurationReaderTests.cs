@@ -43,5 +43,15 @@ namespace OneConfig.Tests
             var value = reader.GetSingleValue("PATH");
             Assert.IsFalse(String.IsNullOrEmpty(value as string));
         }
+
+        [Test]
+        public void CanReadConfigurationFromStringArray()
+        {
+            var args = new string[] {"/Key1:Value1","/Key2:\"Value Two\""};
+            var reader = new StringArrayConfigurationReader(args);
+
+            Assert.AreEqual("Value1", reader.GetSingleValue("Key1"));
+            Assert.AreEqual("Value Two", reader.GetSingleValue("Key2"));
+        }
     }
 }

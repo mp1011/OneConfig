@@ -17,6 +17,7 @@ namespace OneConfig
                 {
                     s.TheCallingAssembly();
                     s.AddAllTypesOf<IConfigurationReaderFactory>();
+                    s.AddAllTypesOf<IConfigurationReader>();
                 });
 
 
