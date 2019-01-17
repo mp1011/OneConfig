@@ -5,6 +5,7 @@ using OneConfig.Services.ConfigurationReaders;
 using OneConfig.Services.Interfaces;
 using OneConfig.Tests.TestModels;
 using System;
+using System.IO;
 using System.Linq;
 
 namespace OneConfig.Tests
@@ -17,7 +18,7 @@ namespace OneConfig.Tests
         [TestCase(@"Data Source=localhost\SQLExpress;Initial Catalog=MyDatabase;Integrated Security=True", typeof(DatabaseConfigurationReader))]
         public void CanParseReaderFromText(string text, Type expectedReaderType)
         {
-            ReaderFactory.ApplicationDirectory = TestContext.CurrentContext.TestDirectory;
+            FileHelper.ApplicationDirectory = new DirectoryInfo(TestContext.CurrentContext.TestDirectory);
             var reader = ReaderFactory.FromString(text, false).Reader;
             Assert.AreEqual(expectedReaderType, reader.GetType());
         }
@@ -49,8 +50,8 @@ namespace OneConfig.Tests
         [Test]
         public void MissingConfigurationDoesNotCrashProgram()
         {
-            var anyConfig = OneConfig.GetValue("any");
-            var error = OneConfig.ReaderLoadErrors.First();
+            var anyConfig = AppConfig.GetValue("any");
+            var error = AppConfig.ReaderLoadErrors.First();
             Assert.That(error.Message.Contains("The file does not exist"));
         }
     }

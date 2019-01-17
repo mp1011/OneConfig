@@ -18,7 +18,7 @@ namespace OneConfig.Tests
 
         public void CanReadConfigValue(string key, object expectedValue)
         {
-            Assert.AreEqual(expectedValue, OneConfig.GetValue(key));
+            Assert.AreEqual(expectedValue, AppConfig.GetValue(key));
         }
 
 
@@ -28,25 +28,25 @@ namespace OneConfig.Tests
             var newReader = new MockConfigurationReader();
             newReader.SetConfiguration("AddedAt", "Runtime");
 
-            Assert.AreEqual(null, OneConfig.GetValue("AddedAt"));
-            OneConfig.AddReader(newReader);
-            Assert.AreEqual("Runtime", OneConfig.GetValue("AddedAt"));
+            Assert.AreEqual(null, AppConfig.GetValue("AddedAt"));
+            AppConfig.AddReader(newReader);
+            Assert.AreEqual("Runtime", AppConfig.GetValue("AddedAt"));
         }
 
         [Test]
         public void CanSetConfigValuesAtRuntime()
         {
-            var oldValue = OneConfig.GetValue("SampleKey");
+            var oldValue = AppConfig.GetValue("SampleKey");
 
             try
             {
-                OneConfig.SetValue("SampleKey", "Changed at runtime");
-                Assert.AreEqual("Changed at runtime", OneConfig.GetValue("SampleKey"));
+                AppConfig.SetValue("SampleKey", "Changed at runtime");
+                Assert.AreEqual("Changed at runtime", AppConfig.GetValue("SampleKey"));
             }
             finally
             {
-                OneConfig.ResetToDefault("SampleKey");
-                Assert.AreEqual(oldValue, OneConfig.GetValue("SampleKey"));
+                AppConfig.ResetToDefault("SampleKey");
+                Assert.AreEqual(oldValue, AppConfig.GetValue("SampleKey"));
             }
         }
 
@@ -55,7 +55,7 @@ namespace OneConfig.Tests
         [TestCase("SampleXMLKey", "This value was provided by the XMLSectionReader and is being cached in memory")]
         public void CanGetSourceOfConfigValue(string key, string expectedSource)
         {
-            Assert.AreEqual(expectedSource, OneConfig.GetValueSource(key).Description);
+            Assert.AreEqual(expectedSource, AppConfig.GetValueSource(key).Description);
         }
     }
 }

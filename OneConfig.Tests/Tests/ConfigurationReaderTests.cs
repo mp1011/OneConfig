@@ -1,6 +1,10 @@
 ﻿using NUnit.Framework;
+using OneConfig.Models;
+using OneConfig.Models.Exceptions;
+using OneConfig.Services;
 using OneConfig.Services.ConfigurationReaders;
 using System;
+using System.IO;
 
 namespace OneConfig.Tests
 {
@@ -31,7 +35,7 @@ namespace OneConfig.Tests
         [TestCase("DoesntExist", null)]
         public void CanReadConfigurationFromDatabase(string key, string expectedValue)
         {
-            var dbReader = new DatabaseConfigurationReader(OneConfig.GetValue("DatabaseConnectionString"));
+            var dbReader = new DatabaseConfigurationReader(AppConfig.GetValue("DatabaseConnectionString"));
             var value = dbReader.GetSingleValue(key);
             Assert.AreEqual(expectedValue, value);
         }
@@ -47,11 +51,65 @@ namespace OneConfig.Tests
         [Test]
         public void CanReadConfigurationFromStringArray()
         {
-            var args = new string[] {"/Key1:Value1","/Key2:\"Value Two\""};
+            var args = new string[] { "/Key1:Value1", "/Key2:\"Value Two\"" };
             var reader = new StringArrayConfigurationReader(args);
 
             Assert.AreEqual("Value1", reader.GetSingleValue("Key1"));
             Assert.AreEqual("Value Two", reader.GetSingleValue("Key2"));
+        }
+
+        [Test]
+        public void ValueCanBeRequired()
+        {
+            Assert.Throws<RequiredValueNotFoundException>(() => AppConfig.GetValue("no such value exists", required: true));
+        }
+
+        [Test]
+        public void CanParseValueAsInteger()
+        {
+            Assert.AreEqual(12345, AppConfig.GetInteger("ThisIsANumber"));
+            Assert.AreEqual(0, AppConfig.GetInteger("ThisIsAPath"));
+        }
+
+        [Test]
+        public void CanParseValueAsDirectory()
+        {
+            FileHelper.ApplicationDirectory = new DirectoryInfo(TestContext.CurrentContext.TestDirectory);
+
+            var path = AppConfig.GetDirectory("ThisIsAPath", FileNotFoundOption.DoNothing);
+            Assert.That(path.Exists);
+
+            var newPath = AppConfig.GetDirectory("ThisIsANewPath", FileNotFoundOption.DoNothing);
+            if(newPath.Exists)
+                newPath.Delete();
+
+            Assert.Throws<ConfigurationException>(() => AppConfig.GetDirectory("ThisIsANewPath", FileNotFoundOption.ThrowError));
+
+            newPath = AppConfig.GetDirectory("ThisIsANewPath", FileNotFoundOption.Create);
+            Assert.That(newPath.Exists);
+        }
+
+        [Test]
+        public void CanParseValueAsAbsoluteDirectory()
+        {
+            FileHelper.ApplicationDirectory = new DirectoryInfo(TestContext.CurrentContext.TestDirectory);
+
+            var path = AppConfig.GetDirectory("ThisIsAPath", FileNotFoundOption.DoNothing);
+            Assert.That(path.Exists);
+
+
+            var mockReader = new MockConfigurationReader();
+            mockReader.SetConfiguration("AbsoluteDir", path.FullName);
+
+            var absolutePath = AppConfig.GetDirectory("AbsoluteDir", FileNotFoundOption.ThrowError);
+
+            AppConfig.AddReader(mockReader);
+        }
+
+        [TearDown]
+        public void Teardown()
+        {
+            AppConfig.Reset();
         }
     }
 }

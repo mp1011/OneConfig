@@ -16,12 +16,12 @@ The value may be any one of the following:
 * A sql connection string, which assumes your configuration is in a table called ConfigurationSettings with "Name" and "Value" columns
 * A path to an xml file, followed by an xpath expression indicating the node that contains configuration settings. Configuration entries themselves are assume to be add tags in with a key and value attribute.
 
-To access configuration values at runtime, use the static OneConfig class.
-* OneConfig.GetValue("Key") - returns the configuration value with the given key
-* OneConfig.GetValueSource("Key") - returns what source provides the given configuration value
-* OneConfig.SetValue("Key", "Value") - adds or changes a configuration at runtime
-* OneConfig.ResetToDefault("Key") - undoes SetValue, reverting the configuration to what it was at app startup
-* OneConfig.AddReader(reader) - allows you to inject a class at runtime that can provide configuration values
+To access configuration values at runtime, use the static AppConfig class.
+* AppConfig.GetValue("Key") - returns the configuration value with the given key
+* AppConfig.GetValueSource("Key") - returns what source provides the given configuration value
+* AppConfig.SetValue("Key", "Value") - adds or changes a configuration at runtime
+* AppConfig.ResetToDefault("Key") - undoes SetValue, reverting the configuration to what it was at app startup
+* AppConfig.AddReader(reader) - allows you to inject a class at runtime that can provide configuration values
 
 # Using Multiple Configuration Sources
 

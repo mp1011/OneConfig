@@ -13,6 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,6 +56,9 @@
     <Compile Include="Models\Exceptions\ConfigurationException.cs" />
     <Compile Include="Models\Exceptions\CyclicVariableDependencyException.cs" />
     <Compile Include="Models\ConfigurationValue.cs" />
+    <Compile Include="Models\Exceptions\ConfigurationValueCastException.cs" />
+    <Compile Include="Models\Exceptions\RequiredValueNotFoundException.cs" />
+    <Compile Include="Models\FileNotFoundOption.cs" />
     <Compile Include="Models\NameValue.cs" />
     <Compile Include="Models\IdentifyByStringAttribute.cs" />
     <Compile Include="Models\ReaderLoadResult.cs" />
@@ -71,10 +75,11 @@
     <Compile Include="Services\ConfigurationReaders\InMemoryConfigurationReader.cs" />
     <Compile Include="Services\ConfigurationReaders\XMLSectionReader.cs" />
     <Compile Include="Services\ConfigVariableResolver.cs" />
+    <Compile Include="Services\FileHelper.cs" />
     <Compile Include="Services\Interfaces\IConfigurationProvider.cs" />
     <Compile Include="Services\Interfaces\IConfigurationReader.cs" />
     <Compile Include="Services\Interfaces\IConfigurationReaderFactory.cs" />
-    <Compile Include="Services\OneConfig.cs" />
+    <Compile Include="Services\AppConfig.cs" />
     <Compile Include="Services\ReaderFactory.cs" />
   </ItemGroup>
   <ItemGroup>

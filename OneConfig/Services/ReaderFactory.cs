@@ -13,14 +13,10 @@ namespace OneConfig.Services
     public static class ReaderFactory
     {
         private static IConfigurationReaderFactory[] factories;
-
-        public static string ApplicationDirectory { get; set; }
-
+     
         static ReaderFactory()
         {
             factories = DIRegistrar.GetInstances<IConfigurationReaderFactory>();
-            var assemblyLocation = new FileInfo(Assembly.GetExecutingAssembly().Location);
-            ApplicationDirectory = assemblyLocation.Directory.FullName;
         }
 
         public static ReaderLoadResult FromString(string text, bool wrapWithInMemoryReader)

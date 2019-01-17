@@ -18,7 +18,7 @@ namespace OneConfig.Services.ConfigurationReaderFactories
             if (xmlExtensionIndex == -1)
                 return null;
 
-            var xmlFilePath = $"{ReaderFactory.ApplicationDirectory}\\{text.Substring(0, xmlExtensionIndex)}.xml";
+            var xmlFilePath = $"{FileHelper.ApplicationDirectory}\\{text.Substring(0, xmlExtensionIndex)}.xml";
             var xPath = text.Substring(xmlExtensionIndex + 4);
             if(String.IsNullOrEmpty(xPath))
                 xPath = "appSettings";
