@@ -7,7 +7,9 @@ namespace OneConfig.Services
 {
     public class ConfigVariableResolver
     {
-        public string Resolve(IConfigurationProvider provider, string text)
+        public const string VariableRegex = @"#{[^}]+}";
+
+        public static string Resolve(IConfigurationProvider provider, string text)
         {
             if (text == null)
                 return null;
@@ -20,7 +22,7 @@ namespace OneConfig.Services
 
             while (somethingChanged)
             {               
-                var replacement = Regex.Replace(text, @"#{[^}]+}", match =>
+                var replacement = Regex.Replace(text, VariableRegex, match =>
                 {
                     var key = match.Value.Replace("#{", "").Replace("}", "");
                     var resolvedValue = provider.GetValue(key);
@@ -49,6 +51,11 @@ namespace OneConfig.Services
             }
 
             return text;
+        }
+
+        public static bool HasUnresolvedVariables(string text)
+        {
+            return Regex.Matches(text, VariableRegex).Count > 0;
         }
     }
 }

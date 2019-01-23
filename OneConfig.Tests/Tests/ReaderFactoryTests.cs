@@ -27,7 +27,7 @@ namespace OneConfig.Tests
         public void CanParseReadersFromAppSettings()
         {
             var readers = ReaderFactory.FromAppSettings(false).ToArray();
-            Assert.AreEqual(4, readers.Length);
+            Assert.AreEqual(6, readers.Length);
 
             Assert.IsInstanceOf<AppSettingsReader>(readers[0].Reader);
             Assert.IsInstanceOf<XMLSectionReader>(readers[1].Reader);
@@ -53,6 +53,32 @@ namespace OneConfig.Tests
             var anyConfig = AppConfig.GetValue("any");
             var error = AppConfig.ReaderLoadErrors.First();
             Assert.That(error.Message.Contains("The file does not exist"));
+        }
+
+        [Test]
+        public void CanResolveReaderWithVariables()
+        {
+            var result = ReaderFactory.FromString(@"Tests\SampleXML\#{ReplaceMe}", false);
+            Assert.IsInstanceOf<UnresolvedReader>(result.Reader);
+            Assert.That(result.HasUnresolvedVariables);
+
+            var fakeReader = new MockConfigurationReader();
+            fakeReader.SetConfiguration("ReplaceMe", "sample.xml//mySection");
+            var testProvider = new ConfigurationProvider(new IConfigurationReader[] { fakeReader });
+            
+            var resolvedText = ConfigVariableResolver.Resolve(testProvider, result.LoadString);
+
+            result = ReaderFactory.FromString(resolvedText, false);
+
+            Assert.IsNotNull(result.Reader);
+            Assert.IsFalse(result.HasUnresolvedVariables);
+        }
+
+        [Test]
+        public void CanResolveReaderWithVariablesFromAppConfig()
+        {
+            Assert.AreEqual("SampleDBValue", AppConfig.GetValue("SampleDBKey"));
+            Assert.AreEqual("This value was provided by the DatabaseConfigurationReader and is being cached in memory", AppConfig.GetValueSource("SampleDBKey").Description);
         }
     }
 }

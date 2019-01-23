@@ -66,6 +66,7 @@
     <Compile Include="Services\ConfigurationProvider\ConfigurationProvider.cs" />
     <Compile Include="Services\ConfigurationReaderFactories\DatabaseReaderFactory.cs" />
     <Compile Include="Services\ConfigurationReaderFactories\StandardReaderFactory.cs" />
+    <Compile Include="Services\ConfigurationReaders\UnresolvedReader.cs" />
     <Compile Include="Services\ConfigurationReaders\RuntimeConfigurationReader.cs" />
     <Compile Include="Services\ConfigurationReaders\StringArrayConfigurationReader.cs" />
     <Compile Include="Services\ConfigurationReaders\WindowsEnvironmentConfigurationReader.cs" />

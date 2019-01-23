@@ -7,4 +7,7 @@
     <add key="Variable2" value="Val#{Variable3}"/>
     <add key="Variable3" value="ue"/>
   </mySection>
+  <anotherSection>
+    <add key="ResolveMe" value="MyDatabase"/>
+  </anotherSection>
 </configuration>

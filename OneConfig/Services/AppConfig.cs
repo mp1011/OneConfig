@@ -1,13 +1,11 @@
 ﻿using OneConfig.Models;
 using OneConfig.Models.Exceptions;
 using OneConfig.Services;
-using OneConfig.Services.ConfigurationProvider;
 using OneConfig.Services.ConfigurationReaders;
 using OneConfig.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 
 namespace OneConfig
 {
@@ -33,6 +31,12 @@ namespace OneConfig
                         readers.Add(result.Reader);
                 }
 
+                foreach(var result in ReaderFactory.ResolveReadersWithVariables(readers, wrapWithInMemoryReader: true))
+                {
+                    if (result.Error != null)
+                        loadErrors.Add(result.Error);
+                }
+                
                 ReaderLoadErrors = loadErrors.ToArray();
                 _provider = new ConfigurationProvider(readers);
 
@@ -80,9 +84,8 @@ namespace OneConfig
         {
             var provider = GetProvider();
             var value = provider.GetValue(key);
-
-            var resolver = new ConfigVariableResolver();
-            var result = resolver.Resolve(provider, value.Text);
+            
+            var result = ConfigVariableResolver.Resolve(provider, value.Text);
 
             if(required && string.IsNullOrEmpty(result))
                 throw new RequiredValueNotFoundException(key);

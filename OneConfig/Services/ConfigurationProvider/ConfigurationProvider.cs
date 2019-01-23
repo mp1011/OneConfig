@@ -1,14 +1,9 @@
-﻿using System;
+﻿using OneConfig.Models;
+using OneConfig.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OneConfig.Models;
-using OneConfig.Models.Exceptions;
-using OneConfig.Services.ConfigurationReaders;
-using OneConfig.Services.Interfaces;
 
-namespace OneConfig.Services.ConfigurationProvider
+namespace OneConfig.Services
 {
     public class ConfigurationProvider : IConfigurationProvider
     {

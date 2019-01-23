@@ -37,12 +37,10 @@ The value for any configuration key may refer to other configuration values by u
 
 Example:
 ```
-<add key="FullName" value="#{First Name" #{Last Name"} />
+<add key="FullName" value="#{First Name} {Last Name"} />
 <add key="First Name" value="Jane" />
 <add key="Last Name" value="Doe"} />
 ```
 The other variables need not come from the same configuration source. Variables that cannot be resolved are left as is. Any variables with a circular dependency will result in a CyclicVariableDependencyException
-
-# Changing Configuration at Runtime
 
 ```
