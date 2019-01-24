@@ -19,7 +19,7 @@ namespace OneConfig.Tests
         public void CanParseReaderFromText(string text, Type expectedReaderType)
         {
             FileHelper.ApplicationDirectory = new DirectoryInfo(TestContext.CurrentContext.TestDirectory);
-            var reader = ReaderFactory.FromString(text, false).Reader;
+            var reader = ReaderFactory.FromString(text,false).Reader;
             Assert.AreEqual(expectedReaderType, reader.GetType());
         }
 
@@ -58,7 +58,7 @@ namespace OneConfig.Tests
         [Test]
         public void CanResolveReaderWithVariables()
         {
-            var result = ReaderFactory.FromString(@"Tests\SampleXML\#{ReplaceMe}", false);
+            var result = ReaderFactory.FromString(@"Tests\SampleXML\#{ReplaceMe}");
             Assert.IsInstanceOf<UnresolvedReader>(result.Reader);
             Assert.That(result.HasUnresolvedVariables);
 
@@ -68,7 +68,7 @@ namespace OneConfig.Tests
             
             var resolvedText = ConfigVariableResolver.Resolve(testProvider, result.LoadString);
 
-            result = ReaderFactory.FromString(resolvedText, false);
+            result = ReaderFactory.FromString(resolvedText);
 
             Assert.IsNotNull(result.Reader);
             Assert.IsFalse(result.HasUnresolvedVariables);
@@ -77,8 +77,10 @@ namespace OneConfig.Tests
         [Test]
         public void CanResolveReaderWithVariablesFromAppConfig()
         {
+            Assert.IsNull(AppConfig.GetValue("SampleDBKey"));
+            AppConfig.SetValue("localhost", "localhost\\SQLExpress");
             Assert.AreEqual("SampleDBValue", AppConfig.GetValue("SampleDBKey"));
-            Assert.AreEqual("This value was provided by the DatabaseConfigurationReader and is being cached in memory", AppConfig.GetValueSource("SampleDBKey").Description);
+            Assert.That(AppConfig.GetValueSource("SampleDBKey").Description.Contains("Database Configuration"));
         }
     }
 }

@@ -23,7 +23,7 @@ namespace OneConfig.Tests
         {
             Assert.Throws<ConfigurationException>(() =>
             {
-                var result = ReaderFactory.FromString(badConnectionString,false);
+                var result = ReaderFactory.FromString(badConnectionString);
                 if (result.Error != null)
                     throw result.Error;
                 var value = result.Reader.GetSingleValue("dummy");

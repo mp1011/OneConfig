@@ -1,4 +1,5 @@
 ﻿using OneConfig.Models;
+using OneConfig.Services.ConfigurationReaders;
 using OneConfig.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,12 @@ namespace OneConfig.Services
             {
                 _configReaders.Add(reader);
             }
+        }
+
+        public void TryResolveReaders()
+        {
+            foreach(var unresolvedReader in _configReaders.OfType<UnresolvedReader>())
+                unresolvedReader.TryResolve(this);
         }
 
         public ConfigurationValue GetValue(string key)

@@ -26,7 +26,7 @@ namespace OneConfig.Services
                 {
                     var key = match.Value.Replace("#{", "").Replace("}", "");
                     var resolvedValue = provider.GetValue(key);
-                    if (resolvedValue != null) 
+                    if (resolvedValue.Text != null) 
                         return resolvedValue.Text;
                     else
                         return match.Value;

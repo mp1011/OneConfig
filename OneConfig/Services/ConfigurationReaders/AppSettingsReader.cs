@@ -11,5 +11,10 @@ namespace OneConfig.Services.ConfigurationReaders
         {
             return ConfigurationManager.AppSettings[key];
         }
+
+        public override string ToString()
+        {
+            return "Application Configuration Settings Reader";
+        }
     }
 }

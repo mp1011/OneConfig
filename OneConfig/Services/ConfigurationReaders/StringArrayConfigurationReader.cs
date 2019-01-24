@@ -49,6 +49,11 @@ namespace OneConfig.Services.ConfigurationReaders
             return nameValues;
         }
 
+        public override string ToString()
+        {
+            return "String Array Configuration Reader";
+        }
+
         public string GetSingleValue(string key)
         {
             //should not hit here but just in case

@@ -16,32 +16,9 @@ namespace OneConfig
      
         public static ConfigurationException[] ReaderLoadErrors { get; private set; }
       
-        private static IConfigurationProvider GetProvider()
+        static AppConfig()
         {
-            if(_provider == null)
-            {
-                List<ConfigurationException> loadErrors = new List<ConfigurationException>();
-                List<IConfigurationReader> readers = new List<IConfigurationReader>();
-
-                foreach(var result in ReaderFactory.FromAppSettings(wrapWithInMemoryReader: true))
-                {
-                    if (result.Error != null)
-                        loadErrors.Add(result.Error);
-                    else if (result.Reader != null)
-                        readers.Add(result.Reader);
-                }
-
-                foreach(var result in ReaderFactory.ResolveReadersWithVariables(readers, wrapWithInMemoryReader: true))
-                {
-                    if (result.Error != null)
-                        loadErrors.Add(result.Error);
-                }
-                
-                ReaderLoadErrors = loadErrors.ToArray();
-                _provider = new ConfigurationProvider(readers);
-
-            }
-            return _provider;
+            Reset();
         }
 
         private static RuntimeConfigurationReader GetRuntimeReader()
@@ -49,7 +26,7 @@ namespace OneConfig
             if(_runtimeConfigReader == null)
             {
                 _runtimeConfigReader = new RuntimeConfigurationReader();
-                GetProvider().AddReader(_runtimeConfigReader);
+                _provider.AddReader(_runtimeConfigReader);
             }
 
             return _runtimeConfigReader;
@@ -57,16 +34,17 @@ namespace OneConfig
 
         public static void AddReader(IConfigurationReader newReader)
         {
-            var provider = GetProvider();
-            provider.AddReader(newReader);
+            _provider.AddReader(newReader);
+            _provider.TryResolveReaders();
         }
 
         public static void SetValue(string key, string value)
         {
             var runtimeReader = GetRuntimeReader();
             runtimeReader.SetConfiguration(key, value);
+            _provider.TryResolveReaders();
         }
-
+         
         public static void ResetToDefault(string key)
         {
             var runtimeReader = GetRuntimeReader();
@@ -82,10 +60,9 @@ namespace OneConfig
         /// <returns></returns>
         public static string GetValue(string key, bool required=false)
         {
-            var provider = GetProvider();
-            var value = provider.GetValue(key);
+            var value = _provider.GetValue(key);
             
-            var result = ConfigVariableResolver.Resolve(provider, value.Text);
+            var result = ConfigVariableResolver.Resolve(_provider, value.Text);
 
             if(required && string.IsNullOrEmpty(result))
                 throw new RequiredValueNotFoundException(key);
@@ -179,8 +156,7 @@ namespace OneConfig
 
         public static ConfigSourceDescription GetValueSource(string key)
         {
-            var provider = GetProvider();
-            var value = provider.GetValue(key);
+            var value = _provider.GetValue(key);
             return new ConfigSourceDescription(value);
         }
 
@@ -189,6 +165,20 @@ namespace OneConfig
             _provider = null;
             _runtimeConfigReader = null;
             ReaderLoadErrors = null;
-        }
+
+            List<ConfigurationException> loadErrors = new List<ConfigurationException>();
+            List<IConfigurationReader> readers = new List<IConfigurationReader>();
+
+            foreach (var result in ReaderFactory.FromAppSettings())
+            {
+                if (result.Error != null)
+                    loadErrors.Add(result.Error);
+                else if (result.Reader != null)
+                    readers.Add(result.Reader);
+            }
+            
+            ReaderLoadErrors = loadErrors.ToArray();
+            _provider = new ConfigurationProvider(readers);
+        }      
     }
 }

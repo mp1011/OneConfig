@@ -22,7 +22,13 @@ namespace OneConfig.Services.ConfigurationReaders
         {
             return new SqlConnection(connectionString);
         }
-        
+
+        public override string ToString()
+        {
+            var cs = new SqlConnectionStringBuilder(_connectionString);
+            return $"Database Configuration [{cs.DataSource}].{cs.InitialCatalog}";
+        }
+
         public string GetSingleValue(string key)
         {
             try

@@ -13,9 +13,12 @@ namespace OneConfig.Services.ConfigurationReaders
     public class XMLSectionReader : IConfigurationReader
     {
         private XmlNode _settingsContainerNode;
+        private string _filePath;
 
         public XMLSectionReader(string filePath, string sectionXPath) 
         {
+            _filePath = filePath;
+
             XmlDocument document = new XmlDocument();
             try
             {
@@ -54,6 +57,11 @@ namespace OneConfig.Services.ConfigurationReaders
                 return null;
             else
                 return node.Attributes["value"]?.Value;
+        }
+
+        public override string ToString()
+        {
+            return $"XML Configuration Reader ({_filePath})";            
         }
     }
 }

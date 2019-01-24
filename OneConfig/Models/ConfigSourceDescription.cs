@@ -20,18 +20,7 @@ namespace OneConfig.Models
             {
                 Reader = value.Provider;
                 OverriddenValues = value.OverriddenValues.ToArray();
-
-                var inMemoryReader = Reader as InMemoryConfigurationReader;
-                if (inMemoryReader != null)
-                {
-                    Description = $"This value was provided by the {inMemoryReader.ActualReader.GetType().Name} and is being cached in memory";
-
-                    Reader = inMemoryReader.ActualReader;
-                }
-                else 
-                    Description = $"This value was provided by the {Reader.GetType().Name}";
-
-
+                Description = "This value was provided by the " + Reader.ToString();
             }
         }
 

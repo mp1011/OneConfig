@@ -47,5 +47,10 @@ namespace OneConfig.Services.ConfigurationReaders
 
             return result;
         }
+
+        public override string ToString()
+        {
+            return ActualReader.ToString() + " and is being cached in memory";
+        }
     }
 }

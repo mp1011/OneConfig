@@ -29,6 +29,11 @@ namespace OneConfig.Services.ConfigurationReaders
         public void RemoveKey(string key)
         {
             _values.Remove(key);
-        }        
+        }
+
+        public override string ToString()
+        {
+            return "Runtime Reader";
+        }
     }
 }

@@ -12,5 +12,10 @@ namespace OneConfig.Services.ConfigurationReaders
         {
             return Environment.GetEnvironmentVariable(key);
         }
+
+        public override string ToString()
+        {
+            return "Windows Environment Configuration Reader";
+        }
     }
 }
