@@ -7,6 +7,6 @@ namespace OneConfig.Services.Interfaces
     {
         ConfigurationValue GetValue(string key);
         void AddReader(IConfigurationReader reader);
-        void TryResolveReaders();
+        void OnValueChanged();
     }
 }

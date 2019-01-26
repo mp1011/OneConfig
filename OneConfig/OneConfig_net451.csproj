@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OneConfig</RootNamespace>
     <AssemblyName>OneConfig</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -81,6 +81,7 @@
     <Compile Include="Services\Interfaces\IConfigurationReader.cs" />
     <Compile Include="Services\Interfaces\IConfigurationReaderFactory.cs" />
     <Compile Include="Services\AppConfig.cs" />
+    <Compile Include="Services\Interfaces\IResettable.cs" />
     <Compile Include="Services\ReaderFactory.cs" />
   </ItemGroup>
   <ItemGroup>

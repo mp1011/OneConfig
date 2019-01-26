@@ -8,7 +8,7 @@ namespace OneConfig.Services.ConfigurationReaders
     /// <summary>
     /// Remembers values in memory so they are only read from their source once
     /// </summary>
-    class InMemoryConfigurationReader : IConfigurationReader
+    class InMemoryConfigurationReader : IConfigurationReader, IResettable
     {
         private Dictionary<string, string> _configValues = new Dictionary<string, string>();
         public IConfigurationReader ActualReader { get; }
@@ -51,6 +51,12 @@ namespace OneConfig.Services.ConfigurationReaders
         public override string ToString()
         {
             return ActualReader.ToString() + " and is being cached in memory";
+        }
+
+        void IResettable.Reset()
+        {
+            _triedPreload = false;
+            _configValues.Clear();
         }
     }
 }

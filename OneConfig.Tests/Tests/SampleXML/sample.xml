@@ -10,4 +10,10 @@
   <anotherSection>
     <add key="ResolveMe" value="MyDatabase"/>
   </anotherSection>
+  <swapSectionA>
+    <add key="SwappableKey" value="Value from A"/>
+  </swapSectionA>
+  <swapSectionB>
+    <add key="SwappableKey" value="Value from B"/>
+  </swapSectionB>
 </configuration>

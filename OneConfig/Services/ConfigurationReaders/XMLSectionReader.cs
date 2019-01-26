@@ -52,7 +52,7 @@ namespace OneConfig.Services.ConfigurationReaders
 
         public string GetSingleValue(string key)
         {
-            var node = _settingsContainerNode.SelectSingleNode($"//add[@key='{key}']");
+            var node = _settingsContainerNode.SelectSingleNode($"add[@key='{key}']");
             if (node == null)
                 return null;
             else

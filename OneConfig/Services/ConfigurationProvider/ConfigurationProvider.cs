@@ -23,10 +23,10 @@ namespace OneConfig.Services
             }
         }
 
-        public void TryResolveReaders()
+        public void OnValueChanged()
         {
-            foreach(var unresolvedReader in _configReaders.OfType<UnresolvedReader>())
-                unresolvedReader.TryResolve(this);
+            foreach (var reader in _configReaders.OfType<IResettable>())
+                reader.Reset();            
         }
 
         public ConfigurationValue GetValue(string key)

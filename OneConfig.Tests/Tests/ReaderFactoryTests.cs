@@ -27,7 +27,7 @@ namespace OneConfig.Tests
         public void CanParseReadersFromAppSettings()
         {
             var readers = ReaderFactory.FromAppSettings(false).ToArray();
-            Assert.AreEqual(6, readers.Length);
+            Assert.AreEqual(7, readers.Length);
 
             Assert.IsInstanceOf<AppSettingsReader>(readers[0].Reader);
             Assert.IsInstanceOf<XMLSectionReader>(readers[1].Reader);
@@ -81,6 +81,19 @@ namespace OneConfig.Tests
             AppConfig.SetValue("localhost", "localhost\\SQLExpress");
             Assert.AreEqual("SampleDBValue", AppConfig.GetValue("SampleDBKey"));
             Assert.That(AppConfig.GetValueSource("SampleDBKey").Description.Contains("Database Configuration"));
+        }
+
+        [Test]
+        public void CanChangeReaderSourceValueAtRuntime()
+        {
+            Assert.IsNull(AppConfig.GetValue("SwappableKey"));
+
+            AppConfig.SetValue("SwapSection", "swapSectionA");
+            Assert.AreEqual("Value from A", AppConfig.GetValue("SwappableKey"));
+            
+            AppConfig.SetValue("SwapSection", "swapSectionB");
+            Assert.AreEqual("Value from B", AppConfig.GetValue("SwappableKey"));
+
         }
     }
 }

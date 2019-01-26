@@ -21,6 +21,11 @@ namespace OneConfig
             Reset();
         }
 
+        internal static IConfigurationProvider GetProvider()
+        {
+            return _provider;
+        }
+
         private static RuntimeConfigurationReader GetRuntimeReader()
         {
             if(_runtimeConfigReader == null)
@@ -35,14 +40,14 @@ namespace OneConfig
         public static void AddReader(IConfigurationReader newReader)
         {
             _provider.AddReader(newReader);
-            _provider.TryResolveReaders();
+            _provider.OnValueChanged();
         }
 
         public static void SetValue(string key, string value)
         {
             var runtimeReader = GetRuntimeReader();
             runtimeReader.SetConfiguration(key, value);
-            _provider.TryResolveReaders();
+            _provider.OnValueChanged();
         }
          
         public static void ResetToDefault(string key)

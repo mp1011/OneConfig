@@ -81,6 +81,7 @@
     <Compile Include="Services\Interfaces\IConfigurationReader.cs" />
     <Compile Include="Services\Interfaces\IConfigurationReaderFactory.cs" />
     <Compile Include="Services\AppConfig.cs" />
+    <Compile Include="Services\Interfaces\IResettable.cs" />
     <Compile Include="Services\ReaderFactory.cs" />
   </ItemGroup>
   <ItemGroup>

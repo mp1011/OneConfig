@@ -11,7 +11,7 @@ namespace OneConfig.Services
 
         public static string Resolve(IConfigurationProvider provider, string text)
         {
-            if (text == null)
+            if (text == null || provider==null)
                 return null;
 
             bool somethingChanged = true;
@@ -55,7 +55,7 @@ namespace OneConfig.Services
 
         public static bool HasUnresolvedVariables(string text)
         {
-            return Regex.Matches(text, VariableRegex).Count > 0;
+            return text != null && Regex.Matches(text, VariableRegex).Count > 0;
         }
     }
 }
