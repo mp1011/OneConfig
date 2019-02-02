@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneConfig.Tests", "OneConfi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneConfig_net451", "OneConfig\OneConfig_net451.csproj", "{C66D29AE-9530-4751-87D7-3E844A50C909}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneConfig.ConsoleTester", "OneConfig.ConsoleTesters\OneConfig.ConsoleTester.csproj", "{A365B9F3-D62E-460A-A691-8EE1E2D4F580}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C66D29AE-9530-4751-87D7-3E844A50C909}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C66D29AE-9530-4751-87D7-3E844A50C909}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C66D29AE-9530-4751-87D7-3E844A50C909}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A365B9F3-D62E-460A-A691-8EE1E2D4F580}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A365B9F3-D62E-460A-A691-8EE1E2D4F580}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A365B9F3-D62E-460A-A691-8EE1E2D4F580}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A365B9F3-D62E-460A-A691-8EE1E2D4F580}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

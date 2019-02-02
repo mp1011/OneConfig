@@ -184,6 +184,7 @@ namespace OneConfig
             
             ReaderLoadErrors = loadErrors.ToArray();
             _provider = new ConfigurationProvider(readers);
+            _provider.OnValueChanged();
         }      
     }
 }

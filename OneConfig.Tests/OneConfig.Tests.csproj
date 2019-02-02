@@ -63,6 +63,7 @@
     <Compile Include="TestModels\MockConfigurationReader.cs" />
     <Compile Include="Tests\ConfigurationReaderTests.cs" />
     <Compile Include="Tests\ConfigurationValueTests.cs" />
+    <Compile Include="Tests\ConsoleTests.cs" />
     <Compile Include="Tests\ErrorHandlingTests.cs" />
     <Compile Include="Tests\ReaderFactoryTests.cs" />
     <Compile Include="Tests\StaticConfigTests.cs" />
@@ -84,6 +85,10 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OneConfig.ConsoleTesters\OneConfig.ConsoleTester.csproj">
+      <Project>{a365b9f3-d62e-460a-a691-8ee1e2d4f580}</Project>
+      <Name>OneConfig.ConsoleTester</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OneConfig\OneConfig.csproj">
       <Project>{1fcb8035-5fe0-445c-ac80-eb2cd85ba7cd}</Project>
       <Name>OneConfig</Name>

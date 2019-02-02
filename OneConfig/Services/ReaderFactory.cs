@@ -50,27 +50,36 @@ namespace OneConfig.Services
 
         public static IEnumerable<string> GetSourceKeysFromAppSettings()
         {
-            yield return ConfigurationManager.AppSettings["OneConfig_Source"];
-
-            int index = 2;
-            while (true)
+            var firstSource = ConfigurationManager.AppSettings["OneConfig_Source"];
+            if (!String.IsNullOrEmpty(firstSource))
             {
-                var readerText = ConfigurationManager.AppSettings[$"OneConfig_Source{index}"];
-                if (readerText != null)
+                yield return firstSource;
+
+                int index = 2;
+                while (true)
                 {
-                    yield return readerText;
-                    index++;
+                    var readerText = ConfigurationManager.AppSettings[$"OneConfig_Source{index}"];
+                    if (readerText != null)
+                    {
+                        yield return readerText;
+                        index++;
+                    }
+                    else
+                        break;
                 }
-                else
-                    break;
             }
+        }
+
+        private static string[] GetStandardSourceKeys()
+        {
+            return new string[] { "this file", "windows environment", "command line" };
         }
 
         public static IEnumerable<ReaderLoadResult> FromAppSettings(bool wrapWithInMemoryReader=true)
         {
             var keys = GetSourceKeysFromAppSettings().ToArray();
             if (keys.Length == 0)
-                throw new Exception("No configuration sources were found. Please provide a key in your application config named OneConfig_Source.");
+                keys = GetStandardSourceKeys();
 
             foreach(var key in keys)            
                 yield return FromString(key, wrapWithInMemoryReader);     
