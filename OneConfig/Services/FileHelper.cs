@@ -22,7 +22,7 @@ namespace OneConfig.Services
             var isRooted = Path.IsPathRooted(path);
 
             //a path that leads with a slash also counts as rooted but isn't actually absolute for our purposes
-            if (Path.GetPathRoot(path).SingleOrDefault() == Path.DirectorySeparatorChar)
+            if (Path.GetPathRoot(path).FirstOrDefault() == Path.DirectorySeparatorChar)
                 return true;
 
             return !isRooted;
