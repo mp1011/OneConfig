@@ -37,12 +37,12 @@ namespace OneConfig.Services.ConfigurationReaders
                 {
                     var name = arg.Substring(0, splitIndex).TrimStart('/').Trim();
                     var value = arg.Substring(splitIndex + 1).Replace("\"", "").Trim();
-                    nameValues.Add(name, value);
+                    nameValues[name] = value;
                 }
                 else
                 {
                     //a parameter without a value (a flag)
-                    nameValues.Add(arg.TrimStart('/'), null);
+                    nameValues[arg.TrimStart('/')] = null;
                 }
             }
 
