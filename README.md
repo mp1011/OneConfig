@@ -10,13 +10,14 @@ With OneConfig, the only configuration you need in your app.config or web.config
 ```
 The value may be any one of the following:
 
-* The string "this file" which uses the app.config or web.config itself.
+* The string "this file" which uses the app.config or web.config itself (.net framework only)
+* The string appsettings.json" which reads values from an appsettings.json file in the application directory
 * The string "windows environment" which reads values from the Windows Environment
 * The string "command line" which reads values from the command line in the form /key:value or /key:"value"
 * A sql connection string, which assumes your configuration is in a table called ConfigurationSettings with "Name" and "Value" columns
 * A path to an xml file, followed by an xpath expression indicating the node that contains configuration settings. Configuration entries themselves are assume to be add tags in with a key and value attribute.
 
-If you do not supply any sources, OneConfig defaults to using the app.config, the windows environment, and the command line.
+If you do not supply any sources, OneConfig defaults to using the app.config or appsettings.json file, the windows environment, and the command line.
 
 To access configuration values at runtime, use the static AppConfig class.
 * AppConfig.GetValue("Key") - returns the configuration value with the given key
