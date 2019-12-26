@@ -9,6 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OneConfig</RootNamespace>
     <AssemblyName>OneConfig</AssemblyName>
+	<TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
