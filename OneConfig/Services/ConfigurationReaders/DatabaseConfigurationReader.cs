@@ -5,7 +5,12 @@ using OneConfig.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
+#if NETSTD
+using Microsoft.Data.SqlClient;
+#else
 using System.Data.SqlClient;
+#endif
+
 using System.Linq;
 
 namespace OneConfig.Services.ConfigurationReaders

@@ -48,9 +48,21 @@ namespace OneConfig.Services
             throw new Models.Exceptions.ConfigurationException($"Unable to determine the provider that matches the string: {text}");
         }
 
+        private static string ReadConfigSource(int index)
+        {
+            var key = index <= 1 ? "OneConfig_Source" : $"OneConfig_Source{index}";
+#if NETSTD
+            var reader = new AppSettingsJsonReader();
+            return reader.GetSingleValue(key);
+#else
+            return ConfigurationManager.AppSettings[key];
+#endif
+        }
+
         public static IEnumerable<string> GetSourceKeysFromAppSettings()
         {
-            var firstSource = ConfigurationManager.AppSettings["OneConfig_Source"];
+
+            var firstSource = ReadConfigSource(1);
             if (!String.IsNullOrEmpty(firstSource))
             {
                 yield return firstSource;
@@ -58,7 +70,7 @@ namespace OneConfig.Services
                 int index = 2;
                 while (true)
                 {
-                    var readerText = ConfigurationManager.AppSettings[$"OneConfig_Source{index}"];
+                    var readerText = ReadConfigSource(index);
                     if (readerText != null)
                     {
                         yield return readerText;
@@ -72,7 +84,11 @@ namespace OneConfig.Services
 
         private static string[] GetStandardSourceKeys()
         {
+#if NETSTD
+            return new string[] { "appsettings.json", "windows environment", "command line" };
+#else
             return new string[] { "this file", "windows environment", "command line" };
+#endif
         }
 
         public static IEnumerable<ReaderLoadResult> FromAppSettings(bool wrapWithInMemoryReader=true)

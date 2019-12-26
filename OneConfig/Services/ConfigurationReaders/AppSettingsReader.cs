@@ -9,7 +9,11 @@ namespace OneConfig.Services.ConfigurationReaders
     {
         public string GetSingleValue(string key)
         {
+#if NETSTD
+            return null; //not supported
+#else
             return ConfigurationManager.AppSettings[key];
+#endif
         }
 
         public override string ToString()
